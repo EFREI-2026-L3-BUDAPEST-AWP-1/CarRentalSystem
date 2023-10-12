@@ -6,9 +6,9 @@ Car Rental System
 
 ## Members
 
-- BRUNET Alix (@Malix-Off)
-- CAUSSIGNAC Romain (@Elegary)
-- RADOVANOVIC Luka (@Zlatovo)
+- BRUNET Alix ([@Malix-Off](https://github.com/Malix-Off))
+- CAUSSIGNAC Romain ([@Elegary](https://github.com/Elegary))
+- RADOVANOVIC Luka ([@Zlatovo](https://github.com/Zlatovo))
 
 ## Technologies Used
 
