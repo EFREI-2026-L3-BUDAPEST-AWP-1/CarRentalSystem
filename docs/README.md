@@ -13,6 +13,9 @@ Car Rental System
 ## Technologies Used
 
 - Bootstrap
+- Express
+- Vue
+- MySQL
 
 ## Sitemap
 
