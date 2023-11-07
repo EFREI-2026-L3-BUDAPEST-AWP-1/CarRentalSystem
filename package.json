@@ -1,0 +1,15 @@
+{
+  "name": "car-rental-system",
+  "version": "1.0.0",
+  "description": "Car Rental System",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alix BRUNET, Romain CAUSSIGNAC, Luka RADOVANOVIC",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
