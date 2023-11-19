@@ -8,14 +8,16 @@ app.set("views", "views");
 
 const port = process.env.PORT || 3000;
 
+const carsController = require('./controllers/cars.route')
+
+app.use('/static', express.static('static'))
+
+app.use('/cars', carsController)
+
 app.get('/', (req, res) => {
-
-    res.render("index", {userAgent: req.headers['user-agent']})
+    res.redirect('/cars/list')
 })
 
-app.get('/other', (req, res) => {
-    res.render("other", {ip: req.ip})
-})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`);
