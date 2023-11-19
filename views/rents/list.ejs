@@ -1,0 +1,27 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-3">
+    <div class="row">
+        <% for (var rent of rents) { %>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Rental ID: <%= rent.rentID %></h5>
+                        <p class="card-text">
+                            <strong>Profile ID:</strong> <%= rent.profileID %><br>
+                            <strong>Car ID:</strong> <%= rent.carID %><br>
+                            <strong>Pick-up Date:</strong> <%= rent.tookDate.toISOString().split('T')[0] %><br>
+                            <strong>Due Date:</strong> <%= rent.dueDate.toISOString().split('T')[0] %><br>
+                            <strong>Price:</strong> €<%= rent.price %><br>
+                            <strong>Return Date:</strong> <%= rent.returnedDate ? rent.returnedDate.toISOString().split('T')[0] : 'Not Returned' %><br>
+                            <strong>Return Condition:</strong> <%= typeof rent.returnedCondition !== 'undefined' ? rent.returnedCondition : 'Not Returned' %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>
