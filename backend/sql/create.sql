@@ -14,7 +14,7 @@ CREATE TABLE Profile(
    lastName VARCHAR(100) NOT NULL,
    login VARCHAR(128) NOT NULL,
    passwordHash VARCHAR(256) NOT NULL,
-   isAdmin LOGICAL,
+   isAdmin BOOLEAN,
    PRIMARY KEY(profileID)
 );
 
@@ -22,10 +22,10 @@ CREATE TABLE Car(
    carID INT,
    brand VARCHAR(50) NOT NULL,
    model VARCHAR(50) NOT NULL,
-   isManual LOGICAL NOT NULL,
-   passengers BYTE NOT NULL,
-   energyType BYTE NOT NULL,
-   doorsAmount BYTE NOT NULL,
+   isManual BOOLEAN NOT NULL,
+   passengers TINYINT(127) NOT NULL,
+   energyType TINYINT(127) NOT NULL,
+   doorsAmount TINYINT(127) NOT NULL,
    renterID INT NOT NULL,
    PRIMARY KEY(carID),
    FOREIGN KEY(renterID) REFERENCES Renter(renterID)
@@ -34,13 +34,13 @@ CREATE TABLE Car(
 CREATE TABLE Rent(
    profileID INT,
    carID INT,
-   rentID COUNTER,
+   rentID INT,
    tookDate DATETIME NOT NULL,
    dueDate DATETIME NOT NULL,
-   price CURRENCY NOT NULL,
+   price DECIMAL(3,0) NOT NULL,
    returnedDate DATETIME,
-   returnedCondition BYTE,
-   PRIMARY KEY(profileID, carID, rentID),
+   returnedCondition TINYINT(127),
+   PRIMARY KEY(rentID),
    FOREIGN KEY(profileID) REFERENCES Profile(profileID),
    FOREIGN KEY(carID) REFERENCES Car(carID)
 );
