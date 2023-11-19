@@ -9,7 +9,12 @@ app.set("views", "views");
 const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.render("index")
+
+    res.render("index", {userAgent: req.headers['user-agent']})
+})
+
+app.get('/other', (req, res) => {
+    res.render("other", {ip: req.ip})
 })
 
 app.listen(port, () => {
