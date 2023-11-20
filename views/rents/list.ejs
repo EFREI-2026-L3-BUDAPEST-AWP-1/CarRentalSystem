@@ -12,7 +12,7 @@
                             <strong>Car ID:</strong> <%= rent.carID %><br>
                             <strong>Pick-up Date:</strong> <%= rent.tookDate.toISOString().split('T')[0] %><br>
                             <strong>Due Date:</strong> <%= rent.dueDate.toISOString().split('T')[0] %><br>
-                            <strong>Price:</strong> €<%= rent.price %><br>
+                            <strong>Price:</strong> <%= parseFloat(rent.price).toFixed(2) %> €<br>
                             <strong>Return Date:</strong> <%= rent.returnedDate ? rent.returnedDate.toISOString().split('T')[0] : 'Not Returned' %><br>
                             <strong>Return Condition:</strong> <%= typeof rent.returnedCondition !== 'undefined' ? rent.returnedCondition : 'Not Returned' %>
                         </p>
