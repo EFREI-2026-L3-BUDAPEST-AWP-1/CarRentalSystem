@@ -1,0 +1,58 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Profile Details</h2>
+            <p><strong>Name:</strong> <%= profile.firstName %> <%= profile.lastName %></p>
+            <p><strong>Login:</strong> <%= profile.login %></p>
+            <% if (profile.isAdmin) { %>
+                <p><span class="badge bg-success">Admin</span></p>
+            <% } else { %>
+                <p><span class="badge bg-primary">User</span></p>
+            <% } %>
+        </div>
+    </div>
+    <% if (rentsOfProfile && rentsOfProfile.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Rents</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rent ID</th>
+                            <th>Took Date</th>
+                            <th>Due Date</th>
+                            <th>Price</th>
+                            <th>Returned Date</th>
+                            <th>Returned Condition</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% rentsOfProfile.forEach(function(rent) { %>
+                            <tr>
+                                <td><%= rent.rentID %></td>
+                                <td><%= rent.tookDate.toISOString().split('T')[0] %></td>
+                                <td><%= rent.dueDate.toISOString().split('T')[0] %></td>
+                                <td><%= parseFloat(rent.price).toFixed(2) %> €</td>
+                                <td><%= rent.returnedDate ? rent.returnedDate.toISOString().split('T')[0] : 'N/A' %></td>
+                                <td><%= typeof rent.returnedCondition !== 'undefined' ? rent.returnedCondition : 'N/A' %></td>
+                                <td><a href="/rents/<%= rent.rentID %>">View Details</a></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <div class="col-md-12">
+                <p>No rents found for this profile.</p>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+</body>
+</html>

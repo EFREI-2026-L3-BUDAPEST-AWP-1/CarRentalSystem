@@ -14,5 +14,12 @@ module.exports = {
         let [rows] = await connection.execute(sqlQuery, [id]);
         connection.release();
         return rows;
-    }
+    },
+    async getRentsByProfileId(profileId){
+        let connection = await pool.getConnection();
+        const sqlQuery = 'SELECT * FROM Rent WHERE profileID =?';
+        let [rows] = await connection.execute(sqlQuery, [profileId]);
+        connection.release();
+        return rows;
+    },
 }
