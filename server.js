@@ -19,7 +19,7 @@ app.use('/rents', rentsController);
 app.use('/profiles', profilesController);
 
 app.get('/', (req, res) => {
-    res.redirect('/cars/list');
+    res.redirect('/profiles/list');
 });
 
 app.get('/about', (req, res) => {
