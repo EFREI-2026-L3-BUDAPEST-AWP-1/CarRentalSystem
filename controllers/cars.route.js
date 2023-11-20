@@ -11,8 +11,7 @@ router.get('/:carId', showCarById)
 async function listAllCars(req, res){
     const cars = await carRepository.getAllCars();
     console.log(cars);
-    res.render("index", {cars: cars});
-    //res.send("Hello")
+    res.render("cars/list", {cars: cars});
 }
 
 async function showCarById(req, res){
