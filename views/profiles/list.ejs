@@ -1,0 +1,33 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5 pt-3">
+    <div class="row">
+        <% for (var profile of profiles) { %>
+            <div class="col-md-4 mb-4"> <!-- Adjusted bottom margin for spacing between cards -->
+                <div class="card h-100 text-center">
+                    <!-- Avatar circulaire avec initiales -->
+                    <div class="mx-auto" style="width: 60px; height: 60px; background-color: #007bff; color: white; border-radius: 50%; font-size: 1.5em; line-height: 60px; margin-top: -20px;"> <!-- Reduced negative margin -->
+                        <%= profile.firstName.charAt(0).toUpperCase() %><%= profile.lastName.charAt(0).toUpperCase() %>
+                    </div>
+                    <div class="card-body pt-2"> <!-- Adjusted padding-top for card-body -->
+                        <h5 class="card-title">
+                            <%= profile.firstName %> <%= profile.lastName %>
+                        </h5>
+                        <p class="card-text"><strong>Login:</strong> <%= profile.login %></p>
+                        <% if (profile.isAdmin) { %>
+                            <span class="badge bg-success">Admin</span>
+                        <% } else { %>
+                            <span class="badge bg-primary">User</span>
+                        <% } %>
+                        <br>
+                        <!-- Lien vers la page de détail du profil -->
+                        <a href="/profiles/<%= profile.profileID %>/" class="btn btn-primary mt-2">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>
