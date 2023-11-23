@@ -1,0 +1,48 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Image -->
+        <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-center" style="height: 400px; background-color: grey;">
+                <img src="../img/peugeot-208.jpg" alt="peugeot-208" class="img-fluid">
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="col-md-6">
+            <h2><%= car.brand %> <%= car.model %></h2>
+            <p><%= car.brand %> <%= car.model %> is a compact and dynamic car, suitable for both the city and long journeys</p>
+
+            <!-- Note with stars -->
+            <div>
+                <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                <span>4.0/5</span>
+            </div>
+
+            <!-- Table with specs -->
+            <table class="table table-bordered mt-4">
+                <tbody>
+                    <tr>
+                        <th>Transmission Type</th>
+                        <% if(car.isManual == 1) { %>
+                        <td>Manual</td>
+                        <% } else { %>
+                        <td>Automatic</td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <th>Number of Seats</th>
+                        <td><%= car.passengers %></td>
+                    </tr>
+                    <tr>
+                        <th>Fuel Type</th>
+                        <td><%= car.energyType %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

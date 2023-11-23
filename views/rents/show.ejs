@@ -1,0 +1,26 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Rent Details - ID: <%= rent.rentID %>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Rental Information</h5>
+                    <p class="card-text"><strong>Profile:</strong> <a href="/profiles/<%= rent.profileID %>">View Profile</a></p>
+                    <p class="card-text"><strong>Car:</strong> <a href="/cars/<%= rent.carID %>">View Car</a></p>
+                    <p class="card-text"><strong>Pick-up Date:</strong> <%= new Date(rent.tookDate).toISOString().split('T')[0] %></p>
+                    <p class="card-text"><strong>Due Date:</strong> <%= new Date(rent.dueDate).toISOString().split('T')[0] %></p>
+                    <p class="card-text"><strong>Price:</strong> <%= parseFloat(rent.price).toFixed(2) %> €</p>
+                    <p class="card-text"><strong>Returned Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not returned yet' %></p>
+                    <p class="card-text"><strong>Returned Condition:</strong> <%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
