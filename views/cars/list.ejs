@@ -1,0 +1,23 @@
+    <%- include("../partials/header.ejs"); %>
+    
+        <div class="container mt-3">
+            <div class="row">
+                <% for (var c of cars) { %>
+                <div class="col-auto mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img src="/static/img/peugeot-208.jpg" alt="peugeot-208" class="img-fluid">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= c.brand %> <%= c.model %></h5>
+                            <p class="card-text">A simple but comfortable car. Suited for city trips. Recommemnded by our company for small budgets.</p>
+                            <a href="/cars/<%= c.carID %>" class="btn btn-primary">Rent</a>
+                        </div>
+                    </div>
+                </div>
+                <% }%>
+            </div>
+        </div>
+    
+</body>
+</html>
