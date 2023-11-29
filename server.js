@@ -11,12 +11,14 @@ const port = process.env.PORT || 3000;
 const carsController = require('./controllers/cars.route');
 const rentsController = require('./controllers/rents.route');
 const profilesController = require('./controllers/profiles.route');
+const authController = require('./controllers/auth.route');
 
 app.use('/static', express.static('static'));
 
 app.use('/cars', carsController);
 app.use('/rents', rentsController);
 app.use('/profiles', profilesController);
+app.use('/auth', authController);
 
 app.get('/', (req, res) => {
     res.redirect('/profiles/list');
