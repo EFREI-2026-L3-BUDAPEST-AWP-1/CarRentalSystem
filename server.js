@@ -8,6 +8,9 @@ app.set("views", "views");
 
 const port = process.env.PORT || 3000;
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+
 const carsController = require('./controllers/cars.route');
 const rentsController = require('./controllers/rents.route');
 const profilesController = require('./controllers/profiles.route');
