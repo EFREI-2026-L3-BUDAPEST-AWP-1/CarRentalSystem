@@ -25,6 +25,9 @@ module.exports = {
         connection.release();
         return rows;
     },
+    async comparePassword(password, passwordHash){
+        return await bcrypt.compare(password, passwordHash);
+    },
     async addProfile(newUser){
         let connection = await pool.getConnection();
         const sqlQuery = 'INSERT INTO Profile (login, passwordHash, firstName, lastName, isAdmin) VALUES (?, ?, ?, ?, 0)';
