@@ -1,0 +1,52 @@
+<!-- include header -->
+<%- include("../partials/header.ejs"); %>
+
+<!-- Show a recap of the rent in card, with all infos, price (passed in argument) and cancel (redirect to /cars) and confirm (post form to the same page) -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Rental Confirmation
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Your Details</h5>
+                    <p class="card-text">
+                        <strong>First Name:</strong> <%= user.firstName %><br>
+                        <strong>Last Name:</strong> <%= user.lastName %><br>
+                    </p>
+
+                    <h5 class="card-title">Car Details</h5>
+                    <p class="card-text">
+                        <strong>Model:</strong> <%= car.model %><br>
+                        <strong>Brand:</strong> <%= car.brand %><br>
+                    </p>
+
+                    <h5 class="card-title">Rental Period</h5>
+                    <p class="card-text">
+                        <strong>Pick-Up Date:</strong> <%= tookDate %><br>
+                        <strong>Due Date:</strong> <%= dueDate %>
+                    </p>
+
+                    <h5 class="card-title">Pricing</h5>
+                    <p class="card-text">
+                        <strong>Price per day: </strong><%= car.pricePerDay %> €<br>
+                        <strong>Number of days: </strong> <%= totalDays %><br>
+                        <strong>Total Price: </strong><%= totalPrice.toFixed(2)%> €
+                    </p>
+
+                    <!-- Add any additional information or actions -->
+                    <form action="" method="post">
+                        <input type="hidden" name="tookDate" value="<%= tookDate %>">
+                        <input type="hidden" name="dueDate" value="<%= dueDate %>">
+                        <button type="submit" class="btn btn-primary" name="confirmRent" value="confirm">Confirm rental</button>
+                        <a href="/cars/list" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer.ejs"); %>

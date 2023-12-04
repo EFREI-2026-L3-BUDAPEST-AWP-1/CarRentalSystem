@@ -1,21 +1,45 @@
 <%- include("../partials/header.ejs"); %>
 
 <div class="container mt-5">
+    <!-- Show an info alert if there is a message in the session -->
+    <% if (successMessage) { %>
+        <div class="alert alert-success" role="alert">
+            <%= successMessage %>
+        </div>
+    <% } %>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- The color of the card header depends on the returned information : if the car is returned, the header is green, if not for more than 24 hours, the header is red, else the header is orange -->
+                <div class="card-header <%= rent.returnedDate ? 'bg-success' : (new Date(rent.dueDate) < new Date() ? 'bg-danger' : 'bg-warning') %> text-white" >
                     Rent Details - ID: <%= rent.rentID %>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Rental Information</h5>
-                    <p class="card-text"><strong>Profile:</strong> <a href="/profiles/<%= rent.profileID %>">View Profile</a></p>
-                    <p class="card-text"><strong>Car:</strong> <a href="/cars/<%= rent.carID %>">View Car</a></p>
-                    <p class="card-text"><strong>Pick-up Date:</strong> <%= new Date(rent.tookDate).toISOString().split('T')[0] %></p>
-                    <p class="card-text"><strong>Due Date:</strong> <%= new Date(rent.dueDate).toISOString().split('T')[0] %></p>
-                    <p class="card-text"><strong>Price:</strong> <%= parseFloat(rent.price).toFixed(2) %> €</p>
-                    <p class="card-text"><strong>Returned Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not returned yet' %></p>
-                    <p class="card-text"><strong>Returned Condition:</strong> <%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %></p>
+                    <div class="card-text">
+                        <p><strong>Car ID:</strong> <%= rent.carID %></p>
+                        <p><strong>Profile ID:</strong> <%= rent.profileID %></p>
+                        <p><strong>Pick-up Date:</strong> <%= new Date(rent.tookDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> at <%= new Date(rent.tookDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) %></p>
+                        <p><strong>Due Date:</strong> <%= new Date(rent.dueDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> at <%= new Date(rent.dueDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) %></p>
+                        <p><strong>Price:</strong> <%= parseFloat(rent.price).toFixed(2) %> €</p>
+                        <p><strong>Returned Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not returned yet' %> at <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : 'Not returned yet' %></p>
+                        <p><strong>Returned Condition:</strong> <%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %> </p>
+                        <!-- Show renter infos with a bootstrap eye icon to profile (fill)-->
+                        <p><strong>Renter:</strong> <%= rent.firstName %> <%= rent.lastName %> <a href="/profiles/<%= rent.profileID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>
+                        </a></p>
+                        <!-- Show car infos with same button -->
+                        <p><strong>Car:</strong> <%= rent.brand %> <%= rent.model %> <a href="/cars/view/<%= rent.carID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> </a></p>
+                        <p><strong>Transmission:</strong> <%= rent.isManual ? 'Manual' : 'Automatic' %></p>
+                        <p><strong>Passengers:</strong> <%= rent.passengers %></p>
+                        <p><strong>Energy Type:</strong> <%= rent.energyType %></p>
+                        <p><strong>Doors:</strong> <%= rent.doorsAmount %></p>
+                        <!-- Show a button to return the car if it is not returned yet -->
+                        <% if (!rent.returnedDate) { %>
+                            <form action="/rents/return/<%= rent.rentID %>" method="post">
+                                <button type="submit" class="btn btn-primary" name="returnCar" value="return">Return Car</button>
+                            </form>
+                        <% } %>
+                        
                 </div>
             </div>
         </div>
