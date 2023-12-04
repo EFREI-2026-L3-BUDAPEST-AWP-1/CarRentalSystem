@@ -36,6 +36,17 @@ app.use('/', (req, res, next) => {
     next();
 });
 
+app.use('*', (req, res, next) => {
+    res.locals.user = req.session.user;
+    res.locals.infoMessage = req.session.infoMessage;
+    res.locals.successMessage = req.session.successMessage;
+    res.locals.errorMessage = req.session.errorMessage;
+    req.session.infoMessage = undefined;
+    req.session.successMessage = undefined;
+    req.session.errorMessage = undefined;
+    next();
+});
+
 app.use('/cars', carsController);
 app.use('/rents', rentsController);
 app.use('/profiles', profilesController);

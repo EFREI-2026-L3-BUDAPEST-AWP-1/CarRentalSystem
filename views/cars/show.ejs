@@ -23,26 +23,136 @@
             <!-- Table with specs -->
             <table class="table table-bordered mt-4">
                 <tbody>
+                    <!-- brand, model, isManual, passengers, energyType, doorsAmount, pricePerDay -->
                     <tr>
-                        <th>Transmission Type</th>
-                        <% if(car.isManual == 1) { %>
-                        <td>Manual</td>
-                        <% } else { %>
-                        <td>Automatic</td>
-                        <% } %>
+                        <th scope="row">Brand</th>
+                        <td><%= car.brand %></td>
                     </tr>
                     <tr>
-                        <th>Number of Seats</th>
+                        <th scope="row">Model</th>
+                        <td><%= car.model %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Transmission</th>
+                        <td><%= car.isManual ? 'Manual' : 'Automatic' %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Passengers</th>
                         <td><%= car.passengers %></td>
                     </tr>
                     <tr>
-                        <th>Fuel Type</th>
+                        <th scope="row">Energy Type</th>
                         <td><%= car.energyType %></td>
                     </tr>
+                    <tr>
+                        <th scope="row">Doors</th>
+                        <td><%= car.doorsAmount %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price per day</th>
+                        <td><%= parseFloat(car.pricePerDay).toFixed(2) %> €</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <!-- Show if car is available (if there are rents for this car, check check if any rent is not returned yet) use a while loop and if not finished it means car is unavailable else it is available -->
+            <% if (rents.length > 0) { %>
+                <% let i = 0; %>
+                <% while (i < rents.length && rents[i].returnedDate) { %>
+                    <% i++; %>
+                <% } %>
+                <% if (i === rents.length) { %>
+                    <a href="/cars/rent/<%= car.carID %>" class="btn btn-primary bi-key-fill" data-bs-toggle="modal" data-bs-target="#setupRentModal"> Rent</a>
+                <% } else { %>
+                    <a href="#" class="btn btn-primary disabled">Unavailable</a>
+                    <!-- Show a alert if car is not available -->
+                    <div class="alert alert-info mt-3" role="alert">
+                        This car is not available for rent at the moment. Please try again later.
+                    </div>
+                <% } %>
+            <% } else { %>
+                <a href="/cars/rent/<%= car.carID %>" class="btn btn-primary bi-key-fill" data-bs-toggle="modal" data-bs-target="#setupRentModal"> Rent</a>
+            <% } %>
+
+
+            
+
+        </div>
+    </div>
+    <!-- Modal for the car rent, with pickup date and return date -->
+    <div class="modal fade" id="setupRentModal" tabindex="-1" aria-labelledby="setupRentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="setupRentModalLabel">Rent <%= car.brand %> <%= car.model %></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Form to setup rent -->
+                <div class="modal-body">
+                    <form action="/rents/create/<%= car.carID %>" method="POST">
+                        <!-- Show the customer profile infos with legal informations (you are responsible for the car, etc.) -->
+                        <div class="mb-3">
+                            <!-- use alert info -->
+                            <div class="alert alert-info" role="alert">
+                                <h4 class="alert-heading">Important Information</h4>
+                                <p>You are about to rent <%= car.brand %> <%= car.model %>. Please read the following information carefully.</p>
+                            </div>
+                            <p><strong>First Name:</strong> <%= user.firstName %></p>
+                            <p><strong>Last Name:</strong> <%= user.lastName %></p>
+                            <div class="alert alert-warning">
+                                <h4 class="alert-heading">Legal Information</h4>
+                                <p>You are responsible for the car during the rental period. If the car is damaged, you will have to pay for the repairs.</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tookDate" class="form-label">Pick-up Date</label>
+                            <input type="date" class="form-control" id="tookDate" name="tookDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dueDate" class="form-label">Due Date</label>
+                            <input type="date" class="form-control" id="dueDate" name="dueDate" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Rent</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Show recent rents -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Recent Rents (Admin only)</h3>
+            <table class="table table-bordered mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">Profile</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Pick-up Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Returned Date</th>
+                        <th scope="col">Returned Condition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let rent of rents) { %>
+                        <tr>
+                            <td><a href="/profiles/<%= rent.profileID %>">View Profile</a></td>
+                            <td><%= rent.lastName %></td>
+                            <td><%= rent.firstName %></td>
+                            <td><%= new Date(rent.tookDate).toISOString().split('T')[0] %></td>
+                            <td><%= new Date(rent.dueDate).toISOString().split('T')[0] %></td>
+                            <td><%= parseFloat(rent.price).toFixed(2) %> €</td>
+                            <td><%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not returned yet' %></td>
+                            <td><%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %></td>
+                        </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
 
 <%- include("../partials/footer.ejs"); %>
