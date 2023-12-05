@@ -21,18 +21,18 @@ VALUES
     (10, 'Olivia', 'Martin', 'oliviamartin', 'secret@123', FALSE);
 
 -- Insertion de 10 voitures
-INSERT INTO Car (carID, brand, model, isManual, passengers, energyType, doorsAmount, renterID)
+INSERT INTO Car (carID, brand, model, isManual, passengers, energyType, doorsAmount, renterID, carDescription, pictureLink)
 VALUES
-    (1, 'Toyota', 'Camry', TRUE, 5, 1, 4, 1),
-    (2, 'Honda', 'Accord', TRUE, 5, 2, 4, 2),
-    (3, 'Ford', 'Fusion', TRUE, 5, 1, 4, 3),
-    (4, 'Volkswagen', 'Jetta', TRUE, 5, 2, 4, 4),
-    (5, 'Chevrolet', 'Malibu', FALSE, 4, 3, 4, 1),
-    (6, 'Nissan', 'Sentra', FALSE, 4, 1, 4, 2),
-    (7, 'Hyundai', 'Elantra', TRUE, 5, 2, 4, 3),
-    (8, 'Kia', 'Optima', TRUE, 5, 1, 4, 4),
-    (9, 'Mazda', 'Mazda6', TRUE, 5, 2, 4, 1),
-    (10, 'Subaru', 'Legacy', TRUE, 5, 1, 4, 2);
+    (1, 'Toyota', 'Camry', TRUE, 5, 1, 4, 1, 'A great car', 'https://www.netcarshow.com/Toyota-Camry_Hybrid-2025-1024-01.jpg'),
+    (2, 'Honda', 'Accord', TRUE, 5, 2, 4, 2, 'A great car', 'https://www.netcarshow.com/Honda-Accord-2023-1024-01.jpg'),
+    (3, 'Ford', 'Fusion', TRUE, 5, 1, 4, 3, 'A great car', 'https://www.netcarshow.com/Ford-Fusion-2019-1024-01.jpg'),
+    (4, 'Volkswagen', 'Jetta', TRUE, 5, 2, 4, 4, 'A great car', 'https://www.netcarshow.com/Volkswagen-Jetta_GLI_40th_Anniversary_Edition-2024-1024-01.jpg'),
+    (5, 'Chevrolet', 'Malibu', FALSE, 4, 3, 4, 1, 'A great car', 'https://www.netcarshow.com/Chevrolet-Malibu-2019-1024-01.jpg'),
+    (6, 'Nissan', 'Sentra', FALSE, 4, 1, 4, 2, 'A great car', 'https://www.netcarshow.com/Nissan-Sentra-2024-1024-07.jpg'),
+    (7, 'Hyundai', 'Elantra', TRUE, 5, 2, 4, 3, 'A great car', 'https://www.netcarshow.com/Hyundai-Elantra_N-2024-1024-04.jpg'),
+    (8, 'Kia', 'Optima', TRUE, 5, 1, 4, 4, 'A great car', 'https://www.netcarshow.com/Kia-Optima_US-Version-2019-1024-04.jpg'),
+    (9, 'Mazda', 'Mazda6', TRUE, 5, 2, 4, 1, 'A great car', 'https://www.netcarshow.com/Mazda-6-2018-1024-05.jpg'),
+    (10, 'Subaru', 'Legacy', TRUE, 5, 1, 4, 2, 'A great car', 'https://www.netcarshow.com/Subaru-Legacy-2020-1024-01.jpg');
 
 -- Insertion de 5 locations
 INSERT INTO Rent (profileID, carID, tookDate, dueDate, price, returnedDate, returnedCondition)
