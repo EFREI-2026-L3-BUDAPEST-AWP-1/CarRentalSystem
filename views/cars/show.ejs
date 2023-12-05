@@ -5,19 +5,19 @@
         <!-- Image -->
         <div class="col-md-6">
             <div class="d-flex align-items-center justify-content-center" style="height: 400px; background-color: grey;">
-                <img src="../img/peugeot-208.jpg" alt="peugeot-208" class="img-fluid">
+                <img src="<%= car.pictureLink %>" alt="<%= car.brand %> - <%= car.model %>" class="img-fluid">
             </div>
         </div>
 
         <!-- Details -->
         <div class="col-md-6">
             <h2><%= car.brand %> <%= car.model %></h2>
-            <p><%= car.brand %> <%= car.model %> is a compact and dynamic car, suitable for both the city and long journeys</p>
+            <p><%= car.carDescription %></p>
 
             <!-- Note with stars -->
             <div>
                 <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <span>4.0/5</span>
+                <span>4.0/5 (HARDCODED DATA, PLEASE REPLACE)</span>
             </div>
 
             <!-- Table with specs -->
@@ -75,7 +75,7 @@
             <% } %>
 
 
-            
+
 
         </div>
     </div>
