@@ -1,22 +1,48 @@
 <%- include("../partials/header.ejs"); %>
 
 <div class="container mt-5">
+    <!-- Show color code for the user to understand the status of the rent -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+                <strong>Green</strong> : Returned
+            </div>
+            <div class="alert alert-danger" role="alert">
+                <strong>Red</strong> : Not returned for more than 24 hours
+            </div>
+            <div class="alert alert-warning" role="alert">
+                <strong>Orange</strong> : Not returned yet
+            </div>
+        </div>
+    </div>
     <div class="row">
         <% for (let rent of rents) { %>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-primary text-white">
+                    <!-- The color of the card header depends on the returned information : if the car is returned, the header is green, if not for more than 24 hours, the header is red, else the header is orange -->  
+                    <div class="card-header <%= rent.returnedDate ? 'bg-success' : (new Date(rent.dueDate) < new Date() ? 'bg-danger' : 'bg-warning') %> text-white" >
                         Rental ID: <%= rent.rentID %>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Car ID: <a href="/cars/<%= rent.carID %>"><%= rent.carID %></a></h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Car ID: <a href="/cars/view/<%= rent.carID %>"><%= rent.carID %></a></h6>
                         <h6 class="card-subtitle mb-2 text-muted">Profile ID: <a href="/profiles/<%= rent.profileID %>"><%= rent.profileID %></a></h6>
                         <div class="card-text">
-                            <p><strong>Pick-up Date:</strong> <%= new Date(rent.tookDate).toISOString().split('T')[0] %></p>
-                            <p><strong>Due Date:</strong> <%= new Date(rent.dueDate).toISOString().split('T')[0] %></p>
+                            <!-- Show date with readable format : ex: Monday, 14th September at 11:15 -->
+
+                            <p><strong>Pick-up Date:</strong> <%= new Date(rent.tookDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> at <%= new Date(rent.tookDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) %></p>
+                            <p><strong>Due Date:</strong> <%= new Date(rent.dueDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> at <%= new Date(rent.dueDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) %></p>
                             <p><strong>Price:</strong> <%= parseFloat(rent.price).toFixed(2) %> €</p>
-                            <p><strong>Return Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not Returned' %></p>
-                            <p><strong>Return Condition:</strong> <%= typeof rent.returnedCondition !== 'undefined' ? rent.returnedCondition : 'Not Returned' %></p>
+                            <p><strong>Returned Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not returned yet' %> at <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : 'Not returned yet' %></p>
+                            <p><strong>Returned Condition:</strong> <%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %> </p>
+                            <!-- Show renter infos with a bootstrap eye icon to profile (fill)-->
+                            <p><strong>Renter:</strong> <%= rent.firstName %> <%= rent.lastName %> <a href="/profiles/<%= rent.profileID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>
+                            </a></p>
+                            <!-- Show car infos with same button -->
+                            <p><strong>Car:</strong> <%= rent.brand %> <%= rent.model %> <a href="/cars/view/<%= rent.carID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> </a></p>
+                            <p><strong>Transmission:</strong> <%= rent.isManual ? 'Manual' : 'Automatic' %></p>
+                            <p><strong>Passengers:</strong> <%= rent.passengers %></p>
+                            <p><strong>Energy Type:</strong> <%= rent.energyType %></p>
+                            <p><strong>Doors:</strong> <%= rent.doorsAmount %></p>
                         </div>
                         <a href="/rents/<%= rent.rentID %>" class="btn btn-primary">View Details</a>
                     </div>
@@ -26,5 +52,4 @@
     </div>
 </div>
 
-</body>
-</html>
+<%- include("../partials/footer.ejs"); %>

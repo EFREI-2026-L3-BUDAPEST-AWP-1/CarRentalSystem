@@ -1,5 +1,5 @@
 CREATE TABLE Renter(
-   renterID INT,
+   renterID INT AUTO_INCREMENT,
    renterName VARCHAR(100) NOT NULL,
    address VARCHAR(500) NOT NULL,
    description VARCHAR(1000) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE Renter(
 );
 
 CREATE TABLE Profile(
-   profileID INT,
+   profileID INT AUTO_INCREMENT,
    firstName VARCHAR(100) NOT NULL,
    lastName VARCHAR(100) NOT NULL,
    login VARCHAR(128) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Profile(
 );
 
 CREATE TABLE Car(
-   carID INT,
+   carID INT AUTO_INCREMENT,
    brand VARCHAR(50) NOT NULL,
    model VARCHAR(50) NOT NULL,
    isManual BOOLEAN NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE Car(
 );
 
 CREATE TABLE Rent(
-   profileID INT,
+   profileID INT AUTO_INCREMENT,
    carID INT,
    rentID INT,
    tookDate DATETIME NOT NULL,
