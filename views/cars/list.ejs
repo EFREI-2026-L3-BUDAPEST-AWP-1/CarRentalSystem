@@ -11,13 +11,12 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= c.brand %> <%= c.model %></h5>
                             <p class="card-text">A simple but comfortable car. Suited for city trips. Recommemnded by our company for small budgets.</p>
-                            <a href="/cars/<%= c.carID %>" class="btn btn-primary">Rent</a>
+                            <a href="/cars/view/<%= c.carID %>" class="btn btn-primary">Rent</a>
                         </div>
                     </div>
                 </div>
                 <% }%>
             </div>
         </div>
-    
-</body>
-</html>
+
+<%- include("../partials/footer.ejs"); %>
