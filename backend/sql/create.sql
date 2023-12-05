@@ -27,6 +27,8 @@ CREATE TABLE Car(
    energyType TINYINT(127) NOT NULL,
    doorsAmount TINYINT(127) NOT NULL,
    renterID INT NOT NULL,
+   carDescription VARCHAR(1000) NOT NULL,
+   pictureLink VARCHAR(250) NOT NULL,
    PRIMARY KEY(carID),
    FOREIGN KEY(renterID) REFERENCES Renter(renterID)
 );
