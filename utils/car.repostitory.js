@@ -21,8 +21,8 @@ module.exports = {
         let connection = await pool.getConnection();
         // boolean isManual = true/false is converted to 1/0
         car.isManual = car.isManual == 'true' ? 1 : 0;
-        const sqlQuery = 'INSERT INTO Car (brand, model, isManual, passengers, energyType, doorsAmount, pricePerDay) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        let [rows] = await connection.execute(sqlQuery, [car.brand, car.model, car.isManual, car.passengers, car.energyType, car.doorsAmount, car.pricePerDay]);
+        const sqlQuery = 'INSERT INTO Car (brand, model, isManual, passengers, energyType, doorsAmount, pricePerDay, carDescription, pictureLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        let [rows] = await connection.execute(sqlQuery, [car.brand, car.model, car.isManual, car.passengers, car.energyType, car.doorsAmount, car.pricePerDay, car.carDescription, car.image]);
         connection.release();
         return rows;
     },
@@ -31,8 +31,16 @@ module.exports = {
         let connection = await pool.getConnection();
         // boolean isManual = true/false is converted to 1/0
         car.isManual = car.isManual == 'true' ? 1 : 0;
-        const sqlQuery = 'UPDATE Car SET brand=?, model=?, isManual=?, passengers=?, energyType=?, doorsAmount=?, pricePerDay=? WHERE carID=?';
-        let [rows] = await connection.execute(sqlQuery, [car.brand, car.model, car.isManual, car.passengers, car.energyType, car.doorsAmount, car.pricePerDay, id]);
+        let sqlQuery = 'UPDATE Car SET brand=?, model=?, isManual=?, passengers=?, energyType=?, doorsAmount=?, pricePerDay=?, carDescription=?';
+        let fields = [car.brand, car.model, car.isManual, car.passengers, car.energyType, car.doorsAmount, car.pricePerDay, car.carDescription];
+        if(car.image){
+            // if image is changed, update it
+            sqlQuery += ', pictureLink=?';
+            fields.push(car.image);
+        }
+        sqlQuery += ' WHERE carID=?';
+        fields.push(id);
+        let [rows] = await connection.execute(sqlQuery, fields);
         connection.release();
         return rows;
     },
