@@ -64,7 +64,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addCarForm" action="/cars/create" method="post">
+                <form id="addCarForm" action="/cars/create" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="brand" class="form-label">Brand</label>
                         <input type="text" class="form-control" id="brand" name="brand" required>
@@ -72,6 +72,11 @@
                     <div class="mb-3">
                         <label for="model" class="form-label">Model</label>
                         <input type="text" class="form-control" id="model" name="model" required>
+                    </div>
+                    <div class="mb-3">
+                        <!-- textarea carDescription -->
+                        <label for="carDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="carDescription" name="carDescription" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="transmission" class="form-label">Transmission</label>
@@ -119,7 +124,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editCarForm-<%= car.carID %>" action="/cars/edit/<%= car.carID %>" method="post">
+                    <form id="editCarForm-<%= car.carID %>" action="/cars/edit/<%= car.carID %>" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="brand-<%= car.carID %>" class="form-label">Brand</label>
                             <input type="text" class="form-control" id="brand-<%= car.carID %>" name="brand" value="<%= car.brand %>" required>
@@ -127,6 +132,11 @@
                         <div class="mb-3">
                             <label for="model-<%= car.carID %>" class="form-label">Model</label>
                             <input type="text" class="form-control" id="model-<%= car.carID %>" name="model" value="<%= car.model %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <!-- textarea carDescription -->
+                            <label for="carDescription-<%= car.carID %>" class="form-label">Description</label>
+                            <textarea class="form-control" id="carDescription-<%= car.carID %>" name="carDescription" rows="3" required><%= car.carDescription %></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="isManual-<%= car.carID %>" class="form-label">Transmission</label>
@@ -153,10 +163,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="carImage-<%= car.carID %>" class="form-label">Car Image</label>
-                            <!--  <input type="file" class="form-control" id="carImage-<%= car.carID %>" name="image" accept="image/*"> -->
+                            <input type="file" class="form-control" id="carImage-<%= car.carID %>" name="image" accept="image/*">
                             <!-- If there's an existing image, show it here -->
-                            <% if (car.image) { %>
-                            <img src="<%= car.image %>" alt="Car" class="img-fluid mt-2" style="max-width: 100px; height: auto;">
+                            <% if (car.pictureLink) { %>
+                            <img src="<%= car.pictureLink %>" alt="Car" class="img-fluid mt-2" style="max-width: 100px; height: auto;">
                             <% } %>
                         </div>
                         <div class="modal-footer">
