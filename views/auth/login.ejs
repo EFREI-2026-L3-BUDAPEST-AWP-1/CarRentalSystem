@@ -9,6 +9,18 @@
 <body>
     <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-4">
+            <!-- Show an info alert if there is a message in the session -->
+            <% if (typeof infoMessage !== 'undefined') { %>
+                <div class="alert alert-info" role="alert">
+                    <%= infoMessage %>
+                </div>
+            <% } %>
+            <!-- Show an error alert if there is a message in the session -->
+            <% if (typeof errorMessage !== 'undefined') { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= errorMessage %>
+                </div>
+            <% } %>
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Login</h3>
