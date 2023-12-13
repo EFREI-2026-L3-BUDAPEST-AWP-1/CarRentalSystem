@@ -5,6 +5,8 @@ const router = express.Router();
 const carRepository = require('../utils/car.repostitory');
 const rentsRepository = require('../utils/rents.repository');
 
+const { adminRightsCheck } = require('../utils/middlewares');
+
 // Manage car images upload
 const multer  = require('multer')
 
@@ -21,8 +23,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage})
 
 router.get('/list', listAllCars);
-router.get('/manage', showCarManagement);
-router.post('/create', upload.single('image'), createCar);
+router.get('/manage', adminRightsCheck, showCarManagement);
+router.post('/create', adminRightsCheck, upload.single('image'), createCar);
 router.get('/view/:carId', showCarById);
 router.post('/edit/:carId', upload.single('image'), editCarById);
 router.post('/delete/:carId', deleteCarById);

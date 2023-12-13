@@ -1,6 +1,12 @@
     <%- include("../partials/header.ejs"); %>
 
         <div class="container mt-3">
+            <!-- Display error message if not admin -->
+            <% if (errorMessage) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= errorMessage %>
+                </div>
+            <% } %>
             <div class="row">
                 <% for (var c of cars) { %>
                 <div class="col-auto mb-3">

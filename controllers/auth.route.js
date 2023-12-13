@@ -14,7 +14,6 @@ router.get('/logout', logoutUser);
 
 
 async function showLogin(req, res){
-    console.log(req.session);
     if(req.session.user){
         res.redirect('/profiles/list');
         return;
@@ -30,27 +29,31 @@ async function loginUser(req, res){
     console.log(req.body);
     // Check if all fields are filled
     if(!req.body.username || !req.body.password){
-        res.send("Please fill all fields");
+        req.session.errorMessage = "Please fill all fields";
+        res.redirect('/auth/login');
         return;
     }
 
     // Check if username exists
     const usernameExists = await profileRepository.getProfileByUsername(req.body.username);
     if(usernameExists.length == 0){
-        res.send("Username doesn't exist");
+        req.session.errorMessage = "Username doesn't exist";
+        res.redirect('/auth/login');
         return;
     }
     
     if(usernameExists.length > 1){
         // in case of multiple users with the same username (should never happen)
-        res.send("Unexpected error");
+        req.session.errorMessage = "Multiple users with the same username";
+        res.redirect('/auth/login');
         return;
     }
 
     // Check if password is correct
     const correctPassword = await profileRepository.comparePassword(req.body.password, usernameExists[0].passwordHash);
     if(!correctPassword){
-        res.send("Incorrect password");
+        req.session.errorMessage = "Password is incorrect";
+        res.redirect('/auth/login');
         return;
     }
 
@@ -73,7 +76,7 @@ async function loginUser(req, res){
 async function logoutUser(req, res){
     // logout logic
 
-    req.session.user = null
+    req.session.user = null;
     req.session.save(function (err) {
         if (err) next(err)
 
@@ -81,6 +84,8 @@ async function logoutUser(req, res){
         // guard against forms of session fixation
         req.session.regenerate(function (err) {
             if (err) next(err)
+            // Update info message
+            req.session.infoMessage = "You have been logged out";
             res.redirect('/auth/login')
         })
     })
@@ -90,20 +95,23 @@ async function registerUser(req, res){
     console.log(req.body);
     // Check if all fields are filled
     if(!req.body.username || !req.body.password || !req.body.passwordCheck || !req.body.firstname || !req.body.lastname){
-        res.send("Please fill all fields");
+        req.session.errorMessage = "Please fill all fields";
+        res.redirect('/auth/register');
         return;
     }
 
     // Check if passwords match
     if(req.body.password != req.body.passwordCheck){
-        res.send("Passwords don't match");
+        req.session.errorMessage = "Passwords don't match";
+        res.redirect('/auth/register');
         return;
     }
 
     // Check if username is taken
     const usernameExists = await profileRepository.getProfileByUsername(req.body.username);
     if(usernameExists.length > 0){
-        res.send("Username already exists");
+        req.session.errorMessage = "Username is already taken";
+        res.redirect('/auth/register');
         return;
     }
 
@@ -115,7 +123,8 @@ async function registerUser(req, res){
         lastname: req.body.lastname
     }
     await profileRepository.addProfile(newUser);
-    res.send("ok");
+    req.session.infoMessage = "You have been registered. Please log in";
+    res.redirect('/auth/login');
 }
 
 module.exports = router;

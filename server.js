@@ -26,16 +26,6 @@ const authController = require('./controllers/auth.route');
 
 app.use('/static', express.static('static'));
 
-app.use('/auth', authController);
-
-app.use('/', (req, res, next) => {
-    if(!req.session.user){
-        res.redirect('/auth/login');
-        return;
-    }
-    next();
-});
-
 app.use('*', (req, res, next) => {
     res.locals.user = req.session.user;
     res.locals.infoMessage = req.session.infoMessage;
@@ -47,12 +37,22 @@ app.use('*', (req, res, next) => {
     next();
 });
 
+app.use('/auth', authController);
+
+app.use('/', (req, res, next) => {
+    if(!req.session.user){
+        res.redirect('/auth/login');
+        return;
+    }
+    next();
+});
+
 app.use('/cars', carsController);
 app.use('/rents', rentsController);
 app.use('/profiles', profilesController);
 
 app.get('/', (req, res) => {
-    res.redirect('/profiles/list');
+    res.redirect('/cars/list');
 });
 
 app.get('/about', (req, res) => {
