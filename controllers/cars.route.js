@@ -12,7 +12,7 @@ const multer  = require('multer')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, process.cwd() + '/static/img/')
+      cb(null, `${process.cwd()}/static/img`)
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -20,14 +20,39 @@ const storage = multer.diskStorage({
     }
   })
   
-const upload = multer({ storage: storage})
+const upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        // Accept images only
+        // In the future, we can add a check to see if the image is a real image and not a fake extension
+        if(file.mimetype.startsWith('image/')){
+            cb(null, true);
+        }
+        else{
+            cb(new Error('The uploaded file is not an image!'), false);
+        }
+    },
+})
+
+async function fileCheck(req, res, next){
+    upload.single('image')(req, res, function(err){
+        if(err){
+            req.session.errorMessage = err.message;
+            res.redirect('/cars/manage');
+        }
+        else{
+            next();
+        }
+    
+    });
+}
 
 router.get('/list', listAllCars);
 router.get('/manage', adminRightsCheck, showCarManagement);
-router.post('/create', adminRightsCheck, upload.single('image'), createCar);
+router.post('/create', adminRightsCheck, fileCheck, createCar);
+router.post('/edit/:carId', adminRightsCheck, fileCheck, editCarById);
+router.post('/delete/:carId', adminRightsCheck, deleteCarById);
 router.get('/view/:carId', showCarById);
-router.post('/edit/:carId', upload.single('image'), editCarById);
-router.post('/delete/:carId', deleteCarById);
 
 
 async function listAllCars(req, res){
@@ -57,7 +82,8 @@ async function createCar(req, res){
     } else {
         req.body.image = "";
     }
-    carRepository.createCar(req.body);
+    await carRepository.createCar(req.body);
+    req.session.successMessage = `${req.body.brand} ${req.body.model} created successfully!`;
     res.redirect("/cars/manage");
 }
 
@@ -69,7 +95,8 @@ async function editCarById(req, res){
         console.log(req.file);
         req.body.image = `/static/img/${req.file.filename}`;
     }
-    carRepository.editCar(id, req.body);
+    await carRepository.editCar(id, req.body);
+    req.session.successMessage = `${req.body.brand} ${req.body.model} edited successfully!`;
     res.redirect("/cars/manage");
 }
 
