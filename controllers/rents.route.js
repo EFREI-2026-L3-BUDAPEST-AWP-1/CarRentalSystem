@@ -4,8 +4,9 @@ const router = express.Router();
 
 const rentsRepository = require('../utils/rents.repository');
 const carRepository = require('../utils/car.repostitory');
+const { adminRightsCheck } = require('../utils/middlewares');
 
-router.get('/list', listAllRents);
+router.get('/list', adminRightsCheck, listAllRents);
 router.get('/:rentId', showRentById);
 router.post('/create/:carId', showRentCreation);
 router.post('/return/:rentId', returnCar);

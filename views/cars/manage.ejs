@@ -2,6 +2,23 @@
 
 <div class="container mt-5">
     <div class="row mb-4">
+        <!-- Show an info alert if there is a message in the session -->
+        <% if (infoMessage) { %>
+            <div class="alert alert-info" role="alert">
+                <%= infoMessage %>
+            </div>
+        <% } %>
+        <% if(successMessage) { %>
+            <div class="alert alert-success" role="alert">
+                <%= successMessage %>
+            </div>
+        <% } %>
+        <!-- Show an error alert if there is a message in the session -->
+        <% if (errorMessage) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= errorMessage %>
+            </div>
+        <% } %>
         <div class="col text-right">
             <!-- Button trigger modal for adding a new car -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCarModal">

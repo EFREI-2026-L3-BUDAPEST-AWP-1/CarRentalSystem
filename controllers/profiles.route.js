@@ -4,8 +4,9 @@ const router = express.Router();
 
 const profilesRepository = require('../utils/profiles.repository');
 const rentsRepository = require('../utils/rents.repository');
+const { adminRightsCheck } = require('../utils/middlewares');
 
-router.get('/list', listAllProfiles);
+router.get('/list', adminRightsCheck, listAllProfiles);
 router.get('/:profileId', showProfileById);
 
 async function listAllProfiles(req, res){
