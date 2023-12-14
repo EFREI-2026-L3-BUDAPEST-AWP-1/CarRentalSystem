@@ -7,6 +7,50 @@
                     <%= errorMessage %>
                 </div>
             <% } %>
+            <form action="" method="get">
+                <!-- A form to filter car by tranmission type, passengers etc. -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="transmission" class="form-label">Transmission</label>
+                            <select class="form-select" id="transmission" name="transmission">
+                                <option value="">All</option>
+                                <option value="true" <%= params.isManual == 1 ? 'selected' : '' %>>Manual</option>
+                                <option value="false" <%= params.isManual == 0 ? 'selected' : '' %>>Automatic</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="passengers" class="form-label">Passengers</label>
+                            <select class="form-select" id="passengers" name="passengers">
+                                <option value="">All</option>
+                                <option value="2" <%= params.passengers == 2 ? 'selected' : '' %>>2</option>
+                                <option value="3" <%= params.passengers == 3 ? 'selected' : '' %>>3</option>
+                                <option value="4" <%= params.passengers == 4 ? 'selected' : '' %>>4</option>
+                                <option value="5" <%= params.passengers == 5 ? 'selected' : '' %>>5</option>
+                                <option value="6" <%= params.passengers == 6 ? 'selected' : '' %>>6</option>
+                                <option value="7" <%= params.passengers == 7 ? 'selected' : '' %>>7</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="energyType" class="form-label">Energy Type</label>
+                            <select class="form-select" id="energyType" name="energyType">
+                                <option value="">All</option>
+                                <option value="1" <%= params.energyType == 1 ? 'selected' : '' %>>Gasoline</option>
+                                <option value="2" <%= params.energyType == 2 ? 'selected' : '' %>>Diesel</option>
+                                <option value="3" <%= params.energyType == 3 ? 'selected' : '' %>>Electric</option>
+                                <option value="4" <%= params.energyType == 4 ? 'selected' : '' %>>Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+                    </div>
+                </div>
+            </form>
             <div class="row">
                 <% for (var c of cars) { %>
                 <div class="col-auto mb-3">
