@@ -3,13 +3,25 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
+            <% if (errorMessage) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= errorMessage %>
+                </div>
+            <% } %>
+            <% if (successMessage) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= successMessage %>
+                </div>
+            <% } %>
             <h2>Profile Details</h2>
             <p><strong>Name:</strong> <%= profile.firstName %> <%= profile.lastName %></p>
             <p><strong>Login:</strong> <%= profile.login %></p>
             <% if (profile.isAdmin) { %>
                 <p><span class="badge bg-success">Admin</span></p>
+                <a class="btn btn-primary" href="/profiles/make-user/<%= profile.profileID %>">Make User</a>
             <% } else { %>
                 <p><span class="badge bg-primary">User</span></p>
+                <a class="btn btn-warning" href="/profiles/make-admin/<%= profile.profileID %>">Make Admin</a>
             <% } %>
         </div>
     </div>

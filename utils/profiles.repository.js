@@ -37,6 +37,20 @@ module.exports = {
             connection.release();
             return rows;
         });
+    },
+    async makeUserAdmin(id){
+        let connection = await pool.getConnection();
+        const sqlQuery = 'UPDATE Profile SET isAdmin = 1 WHERE profileID = ?';
+        let [rows] = await connection.execute(sqlQuery, [id]);
+        connection.release();
+        return rows;
+    },
+    async makeUserNormalUser(id){
+        let connection = await pool.getConnection();
+        const sqlQuery = 'UPDATE Profile SET isAdmin = 0 WHERE profileID = ?';
+        let [rows] = await connection.execute(sqlQuery, [id]);
+        connection.release();
+        return rows;
     }
     
 }
