@@ -1,0 +1,37 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body text-center">
+                <!-- Avatar with Initials -->
+                <div class="mx-auto" style="width: 60px; height: 60px; background-color: #007bff; color: white; border-radius: 50%; font-size: 1.5em; line-height: 60px;">
+                    <%= profile.firstName.charAt(0).toUpperCase() %><%= profile.lastName.charAt(0).toUpperCase() %>
+                </div>
+        
+                <h5 class="card-title mt-3"><%= profile.firstName %> <%= profile.lastName %></h5>
+        
+                <!-- Admin/User Badge -->
+                <% if (profile.isAdmin) { %>
+                    <span class="badge bg-success">Admin</span>
+                <% } else { %>
+                    <span class="badge bg-primary">User</span>
+                <% } %>
+        
+                <p class="card-text mt-3">
+                    <i class="bi bi-person-badge"></i> Username: <%= profile.login %><br>
+                </p>
+            </div>
+            
+            <ul class="list-group list-group-flush">
+                <!-- Additional profile information can be listed here -->
+            </ul>
+        
+            <div class="card-footer bg-transparent text-center">
+                <a href="/rents/my" class="btn btn-primary"><i class="bi bi-list-ul"></i> View My Rents</a>
+            </div>
+        </div>
+    </div>
+</div>        
+
+<%- include("../partials/footer.ejs"); %>

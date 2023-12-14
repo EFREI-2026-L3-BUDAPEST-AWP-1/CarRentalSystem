@@ -121,38 +121,40 @@
         </div>
     </div>
     <!-- Show recent rents -->
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <h3>Recent Rents (Admin only)</h3>
-            <table class="table table-bordered mt-4">
-                <thead>
-                    <tr>
-                        <th scope="col">Profile</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Pick-up Date</th>
-                        <th scope="col">Due Date</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Returned Date</th>
-                        <th scope="col">Returned Condition</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let rent of rents) { %>
+    <% if(user.isAdmin) { %>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3>Recent Rents (Admin only)</h3>
+                <table class="table table-bordered mt-4">
+                    <thead>
                         <tr>
-                            <td><a href="/profiles/<%= rent.profileID %>">View Profile</a></td>
-                            <td><%= rent.lastName %></td>
-                            <td><%= rent.firstName %></td>
-                            <td><%= new Date(rent.tookDate).toISOString().split('T')[0] %></td>
-                            <td><%= new Date(rent.dueDate).toISOString().split('T')[0] %></td>
-                            <td><%= parseFloat(rent.price).toFixed(2) %> €</td>
-                            <td><%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not returned yet' %></td>
-                            <td><%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %></td>
+                            <th scope="col">Profile</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Pick-up Date</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Returned Date</th>
+                            <th scope="col">Returned Condition</th>
                         </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% for (let rent of rents) { %>
+                            <tr>
+                                <td><a href="/profiles/<%= rent.profileID %>">View Profile</a></td>
+                                <td><%= rent.lastName %></td>
+                                <td><%= rent.firstName %></td>
+                                <td><%= new Date(rent.tookDate).toISOString().split('T')[0] %></td>
+                                <td><%= new Date(rent.dueDate).toISOString().split('T')[0] %></td>
+                                <td><%= parseFloat(rent.price).toFixed(2) %> €</td>
+                                <td><%= rent.returnedDate ? new Date(rent.returnedDate).toISOString().split('T')[0] : 'Not returned yet' %></td>
+                                <td><%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-</div>
+    <% } %>
 
 <%- include("../partials/footer.ejs"); %>

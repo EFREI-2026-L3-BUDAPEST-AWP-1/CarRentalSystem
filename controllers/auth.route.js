@@ -67,8 +67,15 @@ async function loginUser(req, res){
         // save the session before redirection to ensure page
         // load does not happen before session is saved
         req.session.save(function (err) {
-          if (err) return next(err)
-          res.redirect('/profiles/list');
+            if (err) return next(err)
+
+            if(req.session.user.isAdmin){
+                res.redirect('/rents/list')
+            }
+            else {
+                res.redirect('/cars/list')
+            }
+
         })
       })
 }

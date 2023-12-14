@@ -7,7 +7,8 @@ const rentsRepository = require('../utils/rents.repository');
 const { adminRightsCheck } = require('../utils/middlewares');
 
 router.get('/list', adminRightsCheck, listAllProfiles);
-router.get('/:profileId', showProfileById);
+router.get('/me', showCurrentUserProfile);
+router.get('/:profileId', adminRightsCheck, showProfileById);
 
 async function listAllProfiles(req, res){
     const profiles = await profilesRepository.getAllProfiles();
@@ -22,6 +23,12 @@ async function showProfileById(req, res){
     console.log(profile);
     console.log(rentsOfProfile);
     res.render("profiles/show", {profile: profile[0], rentsOfProfile});
+}
+
+async function showCurrentUserProfile(req, res){
+    const id = req.session.user.profileID;
+    const profile = await profilesRepository.getProfileById(id);
+    res.render("profiles/current_user_profile", {profile: profile[0]});
 }
 
 

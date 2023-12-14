@@ -1,0 +1,37 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="container mt-5">
+    <div class="row">
+    <% rents.forEach(function(rent) { %>
+        <div class="card mb-4 shadow-sm">
+          <div class="row g-0 align-items-center">
+            <div class="col-lg-4 d-flex align-items-center justify-content-center p-3">
+              <img src="<%= rent.pictureLink %>" class="img-fluid rounded-start" alt="Image of <%= rent.brand %> <%= rent.model %>" style="max-height: 200px;">
+            </div>
+            <div class="col-lg-8">
+              <div class="card-body">
+                <h5 class="card-title"><%= rent.brand %> <%= rent.model %></h5>
+                <p class="card-text"><%= rent.carDescription %></p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><i class="bi bi-calendar3"></i> Pick-Up Date: <%= new Date(rent.tookDate).toLocaleDateString() %></li>
+                  <li class="list-group-item"><i class="bi bi-calendar3"></i> Due Date: <%= new Date(rent.dueDate).toLocaleDateString() %></li>
+                  <li class="list-group-item"><i class="bi bi-cash-stack"></i> Price: €<%= rent.price %></li>
+                  <li class="list-group-item"><i class="bi bi-cash"></i> Price Per Day: €<%= rent.pricePerDay %></li>
+                  <li class="list-group-item"><i class="bi bi-gear"></i> Transmission: <%= rent.isManual ? 'Manual' : 'Automatic' %></li>
+                  <li class="list-group-item"><i class="bi bi-people"></i> Passengers: <%= rent.passengers %></li>
+                  <li class="list-group-item"><i class="bi bi-battery"></i> Energy Type: <%= rent.energyType %></li>
+                  <li class="list-group-item"><i class="bi bi-door-closed"></i> Doors: <%= rent.doorsAmount %></li>
+                  <li class="list-group-item"><i class="bi bi-calendar-check"></i> Returned Date: <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleDateString() : 'Not Returned Yet' %></li>
+                  <li class="list-group-item"><i class="bi bi-clipboard-check"></i> Returned Condition: <%= rent.returnedCondition !== null ? rent.returnedCondition : 'Not Specified' %></li>
+                </ul>
+                <div class="card-footer bg-transparent border-top-0">
+                  <a href="/rents/<%= rent.rentID %>" class="btn btn-primary mt-2"><i class="bi bi-eye-fill"></i> View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }); %>         
+    </div>
+</div>      
+<%- include("../partials/footer.ejs"); %>

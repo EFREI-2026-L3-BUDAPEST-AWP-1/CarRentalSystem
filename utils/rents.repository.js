@@ -47,6 +47,15 @@ module.exports = {
         return rows;
     },
 
+    async getRentsByProfileIdWithCarInfos(profileId){
+        // use JOINS to get the profile information of the renter, the car information and the rent information
+        let connection = await pool.getConnection();
+        const sqlQuery = 'SELECT * FROM Rent JOIN Car ON Rent.carID = Car.carID WHERE Rent.profileID =?';
+        let [rows] = await connection.execute(sqlQuery, [profileId]);
+        connection.release();
+        return rows;
+    },
+
     async createRentForCar(carId, profileId, infos){
         const { tookDate, dueDate } = infos;
         const price = infos.totalPrice;

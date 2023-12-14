@@ -7,9 +7,10 @@ const carRepository = require('../utils/car.repostitory');
 const { adminRightsCheck } = require('../utils/middlewares');
 
 router.get('/list', adminRightsCheck, listAllRents);
-router.get('/:rentId', showRentById);
 router.post('/create/:carId', showRentCreation);
 router.post('/return/:rentId', returnCar);
+router.get('/my', showCurrentUserRents);
+router.get('/:rentId', showRentById);
 
 async function listAllRents(req, res){
     const rents = await rentsRepository.getAllRentsWithCarAndProfileInfos();
@@ -75,6 +76,11 @@ async function returnCar(req, res){
         req.session.errorMessage = "Error while returning car!";
     }
     res.redirect("/rents/" + id);
+}
+
+async function showCurrentUserRents(req, res){
+    const rents = await rentsRepository.getRentsByProfileIdWithCarInfos(req.session.user.profileID);
+    res.render("rents/current_user_rents", {rents});
 }
 
 module.exports = router;
