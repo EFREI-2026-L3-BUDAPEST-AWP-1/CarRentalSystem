@@ -1,11 +1,44 @@
 {
   "name": "car-rental-system",
-  "version": "1.0.0",
   "description": "Car Rental System",
+  "version": "1.0.0",
+  "private": true,
   "main": "server.js",
-  "scripts": {},
-  "author": "Alix BRUNET, Romain CAUSSIGNAC, Luka RADOVANOVIC",
-  "license": "ISC",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EFREI-2026-L3-BUDAPEST-AWP-1/CarRentalSystem.git"
+  },
+  "homepage": "https://github.com/EFREI-2026-L3-BUDAPEST-AWP-1/CarRentalSystem",
+  "bugs": {
+    "url": "https://github.com/EFREI-2026-L3-BUDAPEST-AWP-1/CarRentalSystem/issues"
+  },
+  "keywords": [
+    "car",
+    "rental",
+    "system",
+    "dashboard",
+    "ejs",
+    "express"
+  ],
+  "author": "EFREI-2026-L3-BUDAPEST-AWP-1",
+  "contributors": [
+    {
+      "name": "Alix BRUNET",
+      "email": "alix.brunet@efrei.net",
+      "url": "https://github.com/Malix-off"
+    },
+    {
+      "name": "Romain CAUSSIGNAC",
+      "email": "romain.caussignac@efrei.net",
+      "url": "https://github.com/Elegary"
+    },
+    {
+      "name": "Luka RADOVANOVIC",
+      "email": "luka.radovanovic@efrei.net",
+      "url": "https://github.com/Zlatovo"
+    }
+  ],
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
