@@ -1,187 +1,236 @@
 <%- include("../partials/header.ejs"); %>
 
-<div class="container mt-4">
+<div class="container mt-3">
+    <!-- Display error message if not admin -->
+    <% if (errorMessage) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= errorMessage %>
+        </div>
+    <% } %>
+    <form action="" method="get">
+        <!-- A form to filter car by tranmission type, passengers etc. -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="transmission" class="form-label">Transmission</label>
+                    <select class="form-select" id="transmission" name="transmission">
+                        <option value="">All</option>
+                        <option value="true" <%= params.isManual == 1 ? 'selected' : '' %>>Manual</option>
+                        <option value="false" <%= params.isManual == 0 ? 'selected' : '' %>>Automatic</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="passengers" class="form-label">Passengers</label>
+                    <select class="form-select" id="passengers" name="passengers">
+                        <option value="">All</option>
+                        <option value="2" <%= params.passengers == 2 ? 'selected' : '' %>>2</option>
+                        <option value="3" <%= params.passengers == 3 ? 'selected' : '' %>>3</option>
+                        <option value="4" <%= params.passengers == 4 ? 'selected' : '' %>>4</option>
+                        <option value="5" <%= params.passengers == 5 ? 'selected' : '' %>>5</option>
+                        <option value="6" <%= params.passengers == 6 ? 'selected' : '' %>>6</option>
+                        <option value="7" <%= params.passengers == 7 ? 'selected' : '' %>>7</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="energyType" class="form-label">Energy Type</label>
+                    <select class="form-select" id="energyType" name="energyType">
+                        <option value="">All</option>
+                        <option value="1" <%= params.energyType == 1 ? 'selected' : '' %>>Gasoline</option>
+                        <option value="2" <%= params.energyType == 2 ? 'selected' : '' %>>Diesel</option>
+                        <option value="3" <%= params.energyType == 3 ? 'selected' : '' %>>Electric</option>
+                        <option value="4" <%= params.energyType == 4 ? 'selected' : '' %>>Hybrid</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary mt-4">Filter</button>
+            </div>
+        </div>
+    </form>
     <div class="row">
         <% for (var c of cars) { %>
-        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-                <div class="d-flex align-items-center justify-content-center">
-                    <img src="<%= c.pictureLink %>" alt="<%= c.brand %> - <%= c.model %>" class="img-fluid">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title price-tag">From <%= c.pricePerDay %> €</h5>
-                    <h5 class="card-title"><%= c.brand %> <%= c.model %></h5>
-                    <hr>
-                    <div class="card-info">
-                        <div class="infos">
-                            <img src="/static/icons/passenger.png" class="icons">
-                            <p class="card-text"><%= c.passengers %></p>
-                        </div>
-                        <div class="infos">
-                            <img src="/static/icons/car-door.png" class="icons">
-                            <p class="card-text"><%= c.doorsAmount %></p>
-                        </div>
-                        <div class="infos">
-                            <img src="/static/icons/gearbox.png" class="icons">
-                            <p class="card-text"><%= c.isManual %></p>
-                        </div>
-                        <div class="infos">
-                            <img src="/static/icons/gasoline-pump.png" class="icons">
-                            <p class="card-text"><%= c.energyType %></p>
-                        </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="card">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="<%= c.pictureLink %>" alt="<%= c.brand %> - <%= c.model %>" class="img-fluid">
                     </div>
-                    <div class="infos-btn">
-                        <a href="/cars/view/<%= c.carID %>" class="btn btn-primary">RENT</a>
+                    <div class="card-body">
+                        <h5 class="card-title price-tag">From <%= c.pricePerDay %> €</h5>
+                        <h5 class="card-title"><%= c.brand %> <%= c.model %></h5>
+                        <hr>
+                        <div class="card-info">
+                            <div class="infos">
+                                <img src="/static/icons/passenger.png" class="icons">
+                                <p class="card-text"><%= c.passengers %></p>
+                            </div>
+                            <div class="infos">
+                                <img src="/static/icons/car-door.png" class="icons">
+                                <p class="card-text"><%= c.doorsAmount %></p>
+                            </div>
+                            <div class="infos">
+                                <img src="/static/icons/gearbox.png" class="icons">
+                                <p class="card-text"><%= c.isManual %></p>
+                            </div>
+                            <div class="infos">
+                                <img src="/static/icons/gasoline-pump.png" class="icons">
+                                <p class="card-text"><%= c.energyType %></p>
+                            </div>
+                        </div>
+                        <div class="infos-btn">
+                            <a href="/cars/view/<%= c.carID %>" class="btn btn-primary btn-rent">RENT</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <% } %>
-    </div>
+            <% } %>
 </div>
+</div>
+<style>
+.container {
+background-color: white;
+width: 75%; /* Adjusted for better responsiveness */
+max-width: 1200px; /* Added maximum width */
+margin: 0 auto; /* Center align */
+padding: 15px; /* Added padding for better mobile view */
+}
+
+.card {
+border-radius: 0px;
+overflow: hidden;
+box-sizing: border-box;
+}
+
+.img-fluid {
+width: 600px;
+height: 350px;
+object-fit: cover;
+}
+
+.card-body {
+position: absolute;
+bottom: -72px; /* Adjusted for responsiveness */
+width: 100%;
+transition: .3s;
+
+display: grid;
+grid-template-columns: 1fr auto; /* Creates two columns */
+gap: 10px; /* Adjust gap between columns */
+align-items: center;
+}
+
+.card-info {
+grid-column: 1; /* Places the info section in the first column */
+}
+.card-body .d-flex {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.card-text,
+.card-title {
+color: white;
+}
+
+.card-title {
+grid-column: 1 / span 2; /* Spans the title across both columns */
+font-weight: bolder;
+}
+
+.card-title,
+.price-tag {
+margin-bottom: 0px;
+}
+
+.icons {
+width: 20px; /* Updated for responsiveness */
+height: 20px; /* Updated for responsiveness */
+filter: invert(100%);
+}
+
+.infos {
+display: inline-block;
+margin-right: 10px; /* Adjusted for responsiveness */
+}
+
+.infos p {
+text-align: center;
+margin-bottom: 0; /* Adjusted for better alignment */
+}
+
+.price-tag {
+font-weight: 350;
+}
+
+.card-body a,
+.card-body p,
+.card-body img {
+visibility: hidden;
+opacity: 0;
+}
+
+hr {
+border-top: 1px solid white;
+opacity: 1;
+margin-right: 23vw; /* Adjusted for responsiveness */
+transition: 1s;
+margin-top: 0px;
+margin-bottom: 5px;
+}
+
+.infos-btn {
+display: inline-block;
+grid-column: 2; /* Places the button in the second column */
+text-align: right; /* Aligns the button to the right */
+}
+
+.btn-rent {
+width: 80px;
+height: 40px;
+border: 1px solid white;
+border-radius: 0px;
+background-color: transparent;
+color: white;
+text-align: center;
+}
+
+.card:hover .card-body {
+bottom: 0;
+background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+}
+
+.card:hover .card-body a,
+.card:hover .card-body p,
+.card:hover .card-body img {
+visibility: visible;
+opacity: 1;
+}
+
+.card:hover .card-body hr {
+margin-right: 0;
+}
+
+.btn-rent:hover {
+background-color: rgba(0, 0, 0, 0.5);
+border-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.card-body {
+    bottom: -10px; /* Adjusted for smaller screens */
+}
+
+hr {
+    margin-right: 15vw; /* Adjusted for smaller screens */
+}
+}
+</style>
 
 <%- include("../partials/footer.ejs"); %>
-
-<style>
-    .container {
-        background-color: white;
-        width: 75%; /* Adjusted for better responsiveness */
-        max-width: 1200px; /* Added maximum width */
-        margin: 0 auto; /* Center align */
-        padding: 15px; /* Added padding for better mobile view */
-    }
-
-    .card {
-        border-radius: 0px;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
-
-    .img-fluid {
-        width: 600px;
-        height: 350px;
-        object-fit: cover;
-    }
-
-    .card-body {
-        position: absolute;
-        bottom: -72px; /* Adjusted for responsiveness */
-        width: 100%;
-        transition: .3s;
-
-        display: grid;
-        grid-template-columns: 1fr auto; /* Creates two columns */
-        gap: 10px; /* Adjust gap between columns */
-        align-items: center;
-    }
-    
-    .card-info {
-        grid-column: 1; /* Places the info section in the first column */
-    }
-    .card-body .d-flex {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .card-text,
-    .card-title {
-        color: white;
-    }
-
-    .card-title {
-        grid-column: 1 / span 2; /* Spans the title across both columns */
-        font-weight: bolder;
-    }
-
-    .card-title,
-    .price-tag {
-        margin-bottom: 0px;
-    }
-
-    .icons {
-        width: 20px; /* Updated for responsiveness */
-        height: 20px; /* Updated for responsiveness */
-        filter: invert(100%);
-    }
-
-    .infos {
-        display: inline-block;
-        margin-right: 10px; /* Adjusted for responsiveness */
-    }
-
-    .infos p {
-        text-align: center;
-        margin-bottom: 0; /* Adjusted for better alignment */
-    }
-
-    .price-tag {
-        font-weight: 350;
-    }
-
-    .card-body a,
-    .card-body p,
-    .card-body img {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    hr {
-        border-top: 1px solid white;
-        opacity: 1;
-        margin-right: 23vw; /* Adjusted for responsiveness */
-        transition: 1s;
-        margin-top: 0px;
-        margin-bottom: 5px;
-    }
-
-    .infos-btn {
-        display: inline-block;
-        grid-column: 2; /* Places the button in the second column */
-        text-align: right; /* Aligns the button to the right */
-    }
-
-    .btn {
-        width: 80px;
-        height: 40px;
-        border: 1px solid white;
-        border-radius: 0px;
-        background-color: transparent;
-        color: white;
-        text-align: center;
-    }
-
-    .card:hover .card-body {
-        bottom: 0;
-        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
-    }
-
-    .card:hover .card-body a,
-    .card:hover .card-body p,
-    .card:hover .card-body img {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .card:hover .card-body hr {
-        margin-right: 0;
-    }
-
-    .btn:hover {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-color: rgba(0, 0, 0, 0.5);
-    }
-
-
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .card-body {
-            bottom: -10px; /* Adjusted for smaller screens */
-        }
-
-        hr {
-            margin-right: 15vw; /* Adjusted for smaller screens */
-        }
-    }
-</style>
