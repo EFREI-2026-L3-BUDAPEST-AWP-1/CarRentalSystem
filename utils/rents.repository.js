@@ -58,8 +58,17 @@ module.exports = {
         connection.release();
         return rows;
     },
-
-    async createRentForCar(carId, profileId, infos) {
+  
+    async getRentsByProfileIdWithCarInfos(profileId){
+        // use JOINS to get the profile information of the renter, the car information and the rent information
+        let connection = await pool.getConnection();
+        const sqlQuery = 'SELECT * FROM Rent JOIN Car ON Rent.carID = Car.carID WHERE Rent.profileID =? ORDER BY Rent.tookDate DESC';
+        let [rows] = await connection.execute(sqlQuery, [profileId]);
+        connection.release();
+        return rows;
+    },
+  
+    async createRentForCar(carId, profileId, infos){
         if (!carId || !profileId || !infos || !infos.tookDate || !infos.dueDate || !infos.totalPrice) {
             throw new Error('Invalid input');
         }

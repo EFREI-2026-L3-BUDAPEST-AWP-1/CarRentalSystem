@@ -25,7 +25,7 @@
                         <p><strong>Returned Date:</strong> <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not returned yet' %> at <%= rent.returnedDate ? new Date(rent.returnedDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : 'Not returned yet' %></p>
                         <p><strong>Returned Condition:</strong> <%= rent.returnedCondition === 0 ? 'Damaged' : rent.returnedCondition === 1 ? 'Good' : 'Unknown' %> </p>
                         <!-- Show renter infos with a bootstrap eye icon to profile (fill)-->
-                        <p><strong>Renter:</strong> <%= rent.firstName %> <%= rent.lastName %> <a href="/profiles/<%= rent.profileID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>
+                        <p><strong>Renter:</strong> <%= rent.firstName %> <%= rent.lastName %> <a href="/profiles/<%= user.isAdmin ? rent.profileID : 'me' %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>
                         </a></p>
                         <!-- Show car infos with same button -->
                         <p><strong>Car:</strong> <%= rent.brand %> <%= rent.model %> <a href="/cars/view/<%= rent.carID %>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> </a></p>

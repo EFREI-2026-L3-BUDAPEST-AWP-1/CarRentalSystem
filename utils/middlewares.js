@@ -7,5 +7,5 @@ module.exports = {
             req.session.errorMessage = "You don't have admin rights! You have been reported to the system administrator!";
             res.redirect('/cars/list');
         }
-    },
+    }
 }

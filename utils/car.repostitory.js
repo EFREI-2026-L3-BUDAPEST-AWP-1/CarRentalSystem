@@ -8,8 +8,36 @@ module.exports = {
         connection.release();
         return rows;
     },
+  
+    async filterCars(params){
+        let connection = await pool.getConnection();
 
-    async getCarById(id) {
+        let sqlQuery = 'SELECT * FROM Car';
+
+        let conditions = [];
+        let fields = [];
+
+        if(params && (params.isManual || params.passengers || params.energyType )) {
+            if(params.isManual != undefined){
+                conditions.push('isManual = ?');
+                fields.push(params.isManual);
+            }
+            if(params.passengers){
+                conditions.push('passengers = ?');
+                fields.push(params.passengers);
+            }
+            if(params.energyType){
+                conditions.push('energyType = ?');
+                fields.push(params.energyType);
+            }
+            sqlQuery += ' WHERE ' + conditions.join(' AND ');
+        }
+
+        let [rows] = await connection.execute(sqlQuery, fields);
+        connection.release();
+        return rows;
+    },
+    async getCarById(id){
         if (!id) {
             throw new Error('Invalid input: id is required');
         }

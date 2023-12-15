@@ -9,29 +9,39 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg <%= user.isAdmin ? 'bg-danger' : 'bg-primary'%>" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">CarRental</a>
+                <a class="navbar-brand" href="/"><i class="bi bi-car-front"></i> CarRental</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/cars/list">Our cars</a>
+                            <a class="nav-link" href="/cars/list"><i class="bi bi-car-front"></i> Our cars</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/cars/manage">(ADMIN) Manage cars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/rents/list">(ADMIN) Current rents</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profiles/list">(ADMIN) Users profiles</a>
-                        </li>
+                        <% if(user.isAdmin) { %>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cars/manage"><i class="bi bi-wrench"></i> Manage cars</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/rents/list"><i class="bi bi-calendar-check"></i> Current rents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profiles/list"><i class="bi bi-people"></i> Users profiles</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/rents/my"><i class="bi bi-folder2-open"></i> My rents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profiles/me"><i class="bi bi-person-circle"></i> My profile</a>
+                            </li>
+                        <% } %>
 
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/about">About us</a>
+                            <a class="nav-link" aria-current="page" href="/about"><i class="bi bi-info-circle"></i> About us</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

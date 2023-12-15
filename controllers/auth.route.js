@@ -28,6 +28,8 @@ async function showRegister(req, res) {
     }
 }
 
+
+
 async function loginUser(req, res) {
     try {
         console.log(req.body);
@@ -60,7 +62,7 @@ async function loginUser(req, res) {
             res.redirect('/auth/login');
             return;
         }
-
+     
         req.session.regenerate(function (err) {
             if (err) next(err);
 

@@ -4,11 +4,13 @@ const router = express.Router();
 
 const rentsRepository = require('../utils/rents.repository');
 const carRepository = require('../utils/car.repostitory');
+const { adminRightsCheck } = require('../utils/middlewares');
 
-router.get('/list', listAllRents);
-router.get('/:rentId', showRentById);
+router.get('/list', adminRightsCheck, listAllRents);
 router.post('/create/:carId', showRentCreation);
 router.post('/return/:rentId', returnCar);
+router.get('/my', showCurrentUserRents);
+router.get('/:rentId', showRentById);
 
 async function listAllRents(req, res) {
     try {
@@ -103,6 +105,11 @@ async function returnCar(req, res) {
     } catch (error) {
         res.status(500).send("Internal Server Error");
     }
+}
+
+async function showCurrentUserRents(req, res){
+    const rents = await rentsRepository.getRentsByProfileIdWithCarInfos(req.session.user.profileID);
+    res.render("rents/current_user_rents", {rents});
 }
 
 module.exports = router;
