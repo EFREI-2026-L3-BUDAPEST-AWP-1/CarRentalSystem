@@ -1,22 +1,17 @@
 const express = require('express');
-
 const router = express.Router();
-
 const carRepository = require('../utils/car.repostitory');
 const rentsRepository = require('../utils/rents.repository');
-
 const { adminRightsCheck } = require('../utils/middlewares');
-
-// Manage car images upload
-const multer  = require('multer')
+const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, `${process.cwd()}/static/img`)
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, file.fieldname + '-' + uniqueSuffix + '-' + file.originalname);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + '-' + file.originalname);
     }
   })
   
@@ -98,9 +93,13 @@ async function showCarById(req, res){
     res.render("cars/show", {car: car[0], rents: rents});
 }
 
-async function showCarManagement(req, res){
-    const cars = await carRepository.getAllCars();
-    res.render("cars/manage", {cars: cars});
+async function showCarManagement(req, res) {
+    try {
+        const cars = await carRepository.getAllCars();
+        res.render('cars/manage', { cars: cars });
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 async function createCar(req, res){
